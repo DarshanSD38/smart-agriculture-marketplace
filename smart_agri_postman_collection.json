@@ -1,0 +1,230 @@
+{
+  "info": {
+    "name": "Smart Agri Marketplace & Support System APIs",
+    "_postman_id": "c8e1a120-smart-agri-2026",
+    "description": "Complete Postman collection for AI-Powered Smart Agriculture Marketplace & Support System (College 5th Sem Minor Project)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login as Farmer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ramesh.patel@agrifarm.in\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login as Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aarav.sharma@gmail.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Vikram Patil\",\n  \"email\": \"vikram.patil@agri.com\",\n  \"password\": \"password123\",\n  \"role\": \"farmer\",\n  \"phone\": \"+91 98765 43210\",\n  \"location\": \"Nashik, Maharashtra\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Get Current Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Products & Inventory",
+      "item": [
+        {
+          "name": "Get All Produce Marketplace",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/products", "host": ["{{baseUrl}}"], "path": ["products"] }
+          }
+        },
+        {
+          "name": "Get Agri-Input Products",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/products?agriInput=true", "host": ["{{baseUrl}}"], "path": ["products"], "query": [{ "key": "agriInput", "value": "true" }] }
+          }
+        },
+        {
+          "name": "Add Product (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Fresh Golden Papaya\",\n  \"category\": \"Fruits\",\n  \"price\": 35,\n  \"unit\": \"kg\",\n  \"quantity\": 150,\n  \"harvestDate\": \"2026-11-02\",\n  \"location\": \"Nashik, Maharashtra\",\n  \"description\": \"Sweet, tree-ripened organic Red Lady papaya.\",\n  \"image\": \"https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=400\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/products", "host": ["{{baseUrl}}"], "path": ["products"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. AI & Machine Learning Services",
+      "item": [
+        {
+          "name": "AI Price Recommendation (Scikit-Learn)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product\": \"Tomato\",\n  \"quantity\": 100,\n  \"location\": \"Nashik\",\n  \"currentPrice\": 30\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ai/price-recommendation", "host": ["{{baseUrl}}"], "path": ["ai", "price-recommendation"] }
+          }
+        },
+        {
+          "name": "AI Demand Prediction (Scikit-Learn + Pandas)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/ai/demand-prediction?crop=Tomato", "host": ["{{baseUrl}}"], "path": ["ai", "demand-prediction"], "query": [{ "key": "crop", "value": "Tomato" }] }
+          }
+        },
+        {
+          "name": "AI Surplus Spoilage Risk (Scikit-Learn)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/ai/surplus-analysis", "host": ["{{baseUrl}}"], "path": ["ai", "surplus-analysis"] }
+          }
+        },
+        {
+          "name": "AI Crop Recommendation (Random Forest - NPK & Weather)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"N\": 90,\n  \"P\": 42,\n  \"K\": 43,\n  \"temperature\": 20.8,\n  \"humidity\": 82.0,\n  \"ph\": 6.5,\n  \"rainfall\": 202.9\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ai/crop-recommendation", "host": ["{{baseUrl}}"], "path": ["ai", "crop-recommendation"] }
+          }
+        },
+        {
+          "name": "AI Crop Disease Detection (TensorFlow CNN)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "cropName", "value": "Tomato", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/crop-health/analyze", "host": ["{{baseUrl}}"], "path": ["crop-health", "analyze"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Orders & Commerce",
+      "item": [
+        {
+          "name": "Get Farmer / Customer Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"] }
+          }
+        },
+        {
+          "name": "Create Direct Farm Order (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"product\": \"PROD_ID_HERE\",\n      \"name\": \"Organic Hybrid Tomatoes\",\n      \"price\": 30,\n      \"quantity\": 5,\n      \"unit\": \"kg\"\n    }\n  ],\n  \"deliveryAddress\": \"Baner, Pune 411045\",\n  \"paymentMethod\": \"Cash on Delivery\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/orders", "host": ["{{baseUrl}}"], "path": ["orders"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Labour Matching",
+      "item": [
+        {
+          "name": "List Available Labour Jobs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/labour/jobs", "host": ["{{baseUrl}}"], "path": ["labour", "jobs"] }
+          }
+        },
+        {
+          "name": "Post New Job (Farmer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Grape Vine Pruning & Trellis Tying\",\n  \"location\": \"Nashik Plot #4\",\n  \"requiredSkill\": \"Pruning\",\n  \"workersNeeded\": 4,\n  \"dailyPayment\": 700,\n  \"duration\": \"3 Days\",\n  \"description\": \"Skilled vineyard pruning before winter flowering.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/labour/jobs", "host": ["{{baseUrl}}"], "path": ["labour", "jobs"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Admin & Moderation",
+      "item": [
+        {
+          "name": "Get Platform Statistics (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/stats", "host": ["{{baseUrl}}"], "path": ["admin", "stats"] }
+          }
+        }
+      ]
+    }
+  ]
+}
+
